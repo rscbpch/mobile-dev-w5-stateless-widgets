@@ -1,66 +1,45 @@
 import 'package:flutter/material.dart';
 
-class HobbyCard extends StatelessWidget {
-  final String text;
-  final IconData? icon;
-  final Color? color;
-
-  const HobbyCard({super.key, required this.text, required this.icon, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: Colors.white), 
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  text, 
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none
-                  )
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My hobbies'),
+          title: Text('Products'), 
           backgroundColor: const Color.fromARGB(255, 232, 216, 234)
         ),
-        body: Container(
-          color: Colors.grey[400],
+        body: Padding(
           padding: const EdgeInsets.all(40),
           child: Column(
             children: [
-              HobbyCard(text: 'Travelling', icon: Icons.travel_explore, color: Colors.green),
-              HobbyCard(text: 'Skating', icon: Icons.skateboarding, color: Colors.blueAccent)
-            ],
+
+            ]
           ),
         ),
       ),
     ),
   );
+}
+
+class ProductCard extends StatelessWidget {
+  final String imagePath;
+  final String title;
+  final String description;
+
+  const ProductCard({required this.imagePath, required this.title, required this.description, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: [
+          Image(image: AssetImage(imagePath)),
+          Text(title),
+          Text(description)
+        ]
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

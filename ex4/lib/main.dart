@@ -1,66 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HobbyCard extends StatelessWidget {
-  final String text;
-  final IconData? icon;
-  final Color? color;
-
-  const HobbyCard({super.key, required this.text, required this.icon, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: Colors.white), 
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  text, 
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none
-                  )
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('My hobbies'),
-          backgroundColor: const Color.fromARGB(255, 232, 216, 234)
-        ),
-        body: Container(
-          color: Colors.grey[400],
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            children: [
-              HobbyCard(text: 'Travelling', icon: Icons.travel_explore, color: Colors.green),
-              HobbyCard(text: 'Skating', icon: Icons.skateboarding, color: Colors.blueAccent)
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -164,7 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           ],
         ),
       ),

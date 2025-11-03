@@ -1,39 +1,48 @@
 import 'package:flutter/material.dart';
 
-class HobbyCard extends StatelessWidget {
-  final String text;
-  final IconData? icon;
-  final Color? color;
+enum IconPosition { left, right, byDefault }
+enum ButtonType { primary, secondary, disabled }
 
-  const HobbyCard({super.key, required this.text, required this.icon, required this.color});
+class CustomButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final IconPosition iconPosition;
+  final ButtonType buttonType;
+
+  const CustomButton({required this.label, required this.icon, this.iconPosition = IconPosition.byDefault, this.buttonType = ButtonType.primary, super.key});
+
+  Color get color => switch (buttonType) {
+    ButtonType.primary => Colors.blue,
+    ButtonType.secondary => Colors.green,
+    ButtonType.disabled => Colors.grey,
+  };
 
   @override
   Widget build(BuildContext context) {
+    final iconWidget = Icon(icon, color: Colors.white);
+    final textWidget = Text(
+      label,
+      style: const TextStyle(
+        color: Colors.white,
+        decoration: TextDecoration.none,
+      ),
+    );
+
+    final children = (iconPosition == IconPosition.right)
+      ? [textWidget, const SizedBox(width: 20), iconWidget]
+      : [iconWidget, const SizedBox(width: 20), textWidget];
+
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(20)
+        borderRadius: BorderRadius.circular(50),
       ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: Colors.white), 
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  text, 
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none
-                  )
-                ),
-              )
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
         ),
       ),
     );
@@ -44,17 +53,18 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 232, 216, 234),
         appBar: AppBar(
-          title: Text('My hobbies'),
+          title: Text('Custom buttons'),
           backgroundColor: const Color.fromARGB(255, 232, 216, 234)
         ),
         body: Container(
-          color: Colors.grey[400],
-          padding: const EdgeInsets.all(40),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              HobbyCard(text: 'Travelling', icon: Icons.travel_explore, color: Colors.green),
-              HobbyCard(text: 'Skating', icon: Icons.skateboarding, color: Colors.blueAccent)
+              CustomButton(label: 'Submit', icon: Icons.check, buttonType: ButtonType.primary),
+              CustomButton(label: 'Time', icon: Icons.access_time, buttonType: ButtonType.secondary, iconPosition: IconPosition.right),
+              CustomButton(label: 'Account', icon: Icons.account_tree, buttonType: ButtonType.disabled, iconPosition: IconPosition.right),
             ],
           ),
         ),
