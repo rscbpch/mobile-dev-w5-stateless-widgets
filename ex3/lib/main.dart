@@ -6,14 +6,18 @@ void main() {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Products'), 
-          backgroundColor: const Color.fromARGB(255, 232, 216, 234)
+          backgroundColor: const Color.fromARGB(255, 232, 216, 234),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(40),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-
-            ]
+              ProductCard(product: Product.dart),
+              SizedBox(height: 20),
+              ProductCard(product: Product.flutter),
+              SizedBox(height: 20),
+              ProductCard(product: Product.firebase),
+            ],
           ),
         ),
       ),
@@ -21,22 +25,55 @@ void main() {
   );
 }
 
-class ProductCard extends StatelessWidget {
-  final String imagePath;
+enum Product {
+  dart('Dart', 'The best object language', 'dart.png'),
+  flutter('Flutter', 'The best mobile widget library', 'flutter.png'),
+  firebase('Firebase', 'The best cloud database', 'firebase.png');
+
   final String title;
   final String description;
+  final String image;
 
-  const ProductCard({required this.imagePath, required this.title, required this.description, super.key});
+  const Product(this.title, this.description, this.image);
+}
+
+class ProductCard extends StatelessWidget {
+  final Product product;
+
+  const ProductCard({required this.product, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Image(image: AssetImage(imagePath)),
-          Text(title),
-          Text(description)
-        ]
+    return SizedBox(
+      width: double.infinity, 
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Image.asset(
+                product.image,
+                fit: BoxFit.contain,
+                height: 100,
+                width: 100,
+              ),
+              SizedBox(height: 10),
+              Text(
+                product.title,
+                style: TextStyle(
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              SizedBox(height: 2),
+              Text(
+                product.description
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
