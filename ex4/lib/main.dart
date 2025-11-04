@@ -1,7 +1,181 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 150, 199, 238),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.menu), 
+              onPressed: () {}
+            )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            children: [
+              WeatherWidget(
+                city: 'Phnum Penh',
+                imagePath: 'cloudy.png',
+                currentTemperature: 12.2,
+                minTemperature: 10.0,
+                maxTemperature: 30.0,
+                gradientStart: Color.fromARGB(255, 184, 133, 220),
+                gradientEnd: Color.fromARGB(255, 150, 117, 228),
+              ),
+              SizedBox(height: 20),
+              WeatherWidget(
+                city: 'Paris',
+                imagePath: 'sunnyCloudy.png',
+                currentTemperature: 22.2,
+                minTemperature: 10.0,
+                maxTemperature: 30.0,
+                gradientStart: Color.fromARGB(255, 124, 230, 203),
+                gradientEnd: Color.fromARGB(255, 113, 197, 166),
+              ),
+              SizedBox(height: 20),
+              WeatherWidget(
+                city: 'Rome',
+                imagePath: 'sunny.png',
+                currentTemperature: 45.2,
+                minTemperature: 10.0,
+                maxTemperature: 30.0,
+                gradientStart: Color.fromARGB(255, 226, 131, 164),
+                gradientEnd: Color.fromARGB(255, 216, 104, 142),
+              ),
+              SizedBox(height: 20),
+              WeatherWidget(
+                city: 'Toulouse',
+                imagePath: 'veryCloudy.png',
+                currentTemperature: 45.2,
+                minTemperature: 10.0,
+                maxTemperature: 30.0,
+                gradientStart: Color.fromARGB(255, 234, 179, 117),
+                gradientEnd: Color.fromARGB(255, 222, 186, 146),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class WeatherWidget extends StatelessWidget {
+  final String city;
+  final String imagePath;
+  final double currentTemperature;
+  final double minTemperature;
+  final double maxTemperature;
+  final Color gradientStart;
+  final Color gradientEnd;
+
+  const WeatherWidget({
+    required this.city,
+    required this.imagePath,
+    required this.currentTemperature,
+    required this.minTemperature,
+    required this.maxTemperature,
+    required this.gradientStart,
+    required this.gradientEnd,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PhysicalModel(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(30),
+      elevation: 8, 
+      shadowColor: Colors.black, 
+      child: Container(
+        width: double.infinity,
+        height: 120,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Stack(
+            clipBehavior: Clip.hardEdge,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [gradientStart, gradientEnd], 
+                    begin: Alignment.topLeft, 
+                    end: Alignment.bottomRight
+                  ),
+                ),
+              ),
+
+              Positioned(
+                right: -30,
+                top: -10,
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [gradientStart, gradientEnd], 
+                      begin: Alignment.topLeft, 
+                      end: Alignment.bottomRight
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            imagePath, 
+                            width: 50, 
+                            height: 50, 
+                            fit: BoxFit.cover
+                          )
+                        ),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              city, 
+                              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              'Min $minTemperature°C', 
+                              style: const TextStyle(color: Colors.white70)
+                            ),
+                            Text(
+                              'Max $maxTemperature°C', 
+                              style: const TextStyle(color: Colors.white70)
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '$currentTemperature°C',
+                      style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -105,10 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
       ),
