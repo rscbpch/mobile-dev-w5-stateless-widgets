@@ -54,7 +54,7 @@ void main() {
                 minTemperature: 10.0,
                 maxTemperature: 30.0,
                 gradientStart: Color.fromARGB(255, 234, 179, 117),
-                gradientEnd: Color.fromARGB(255, 222, 186, 146),
+                gradientEnd: Color.fromARGB(255, 230, 200, 165),
               ),
             ],
           ),
@@ -91,7 +91,7 @@ class WeatherWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(30),
       elevation: 8, 
       shadowColor: Colors.black, 
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: 120,
         child: ClipRRect(
